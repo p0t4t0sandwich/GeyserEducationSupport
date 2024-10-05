@@ -1,0 +1,6 @@
+id: geysereducationsupport
+name: GeyserEducationSupport
+main: ca.sperrer.geysereducationsupport.GeyserEducationSupport
+api: 2.4.1
+version: 0.1.0
+authors: [p0t4t0sandwich]

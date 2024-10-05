@@ -1,0 +1,46 @@
+plugins {
+    id("java-library")
+    id("java")
+    id("io.github.goooler.shadow") version("8.1.7")
+}
+
+group = "ca.sperrer.geysereducationsupport"
+version = "0.1.0"
+
+repositories {
+    maven {
+        url "https://repo.opencollab.dev/maven-snapshots"
+        mavenContent {
+            snapshotsOnly()
+        }
+    }
+    maven {
+        url "https://repo.opencollab.dev/maven-releases"
+        mavenContent {
+            releasesOnly()
+        }
+    }
+    mavenLocal()
+    mavenCentral()
+}
+
+dependencies {
+    // Geyser API - needed for all extensions
+    compileOnly("org.geysermc.geyser:api:2.3.2-SNAPSHOT")
+
+    // Include other dependencies here - e.g. for configuration.
+    implementation("com.fasterxml.jackson.core:jackson-databind:2.8.3")
+    implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.8.3")
+    implementation("com.nimbusds:nimbus-jose-jwt:9.4")
+    implementation("org.yaml:snakeyaml:1.27")
+}
+
+shadowJar {
+    relocate("com.fasterxml.jackson", "ca.sperrer.geysereducationsupport.jackson")
+    relocate("com.nimbusds", "ca.sperrer.geysereducationsupport.nimbusds")
+    relocate("org.yaml", "ca.sperrer.geysereducationsupport.yaml")
+    relocate("net.jcip", "ca.sperrer.geysereducationsupport.jcip")
+    archiveClassifier = ""
+}
+
+tasks.build.dependsOn(shadowJar)
